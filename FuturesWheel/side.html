@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v3.min.js?2.9.3"></script>
+<style>
+  .container{
+    max-width: 400px;
+    justify-content: center;
+    padding: 10px;
+ }
+
+ #grid {
+   max-width: 400px;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+  margin-top: 50px;
+}
+
+   h1{
+     text-align: justify;
+     font-family: Tahoma;
+     font-size: 1.5em;
+   }
+
+   h3{
+     text-align: justify;
+     font-family: Tahoma;
+     font-size: 1.1em;
+   }
+
+  .n1{
+     font-family: Tahoma;
+     font-size: 0.6em;
+     margin-bottom: 35px;
+
+   }
+
+   .n2{
+
+      font-family: Tahoma;
+      font-size: 0.6em;
+      margin:5px;
+
+    }
+
+    .n3{
+       font-family: Tahoma;
+       font-size: 0.6em;
+       margin: auto;
+       margin-bottom: 20px;
+
+
+
+
+
+     }
+
+
+  p{
+
+    font-family: Tahoma;
+    font-size: 1em;
+
+  }
+
+  .links-nodes{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+
+  .circle{
+    height: 80px;
+    width: 80px;
+    background-color: #0600ab;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    text-align: justify;
+    font-size: 0.6em;
+    color: white;
+    font-weight: bold;
+    font-family: Tahoma;
+  }
+
+  .description{
+    max-width: 150px;
+  }
+
+
+  .primary-link{
+    border-top: 5px solid #999999;
+    width: 70px;
+
+  }
+
+  .secondary-link{
+    border-top: 4px solid #a3a5d4;
+    width: 70px;
+  }
+
+  .tertiary-link{
+    border-top: 3px solid #a3a5d4;
+    width: 70px;
+  }
+
+  .extra-categorical-link{
+    border-top: 3px dotted #e08b8b;
+    width: 70px;
+  }
+  .shape-container{
+    width:100px;
+    display:flex;
+    justify-content: center;
+  }
+.table{
+  max-height: 400px;
+
+}
+.node-name-container{
+  max-width: 60px;
+  max-height:400px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+#x-names{
+  margin-top: 20px;
+  margin-left: 60px;
+  display: flex;
+
+}
+
+.item{
+  font-family: Tahoma;
+  font-weight: bold;
+  font-size: 0.6em;
+}
+
+
+</style>
+<body>
+
+  <div class="container">
+    <h1>Post-COVID Interactive and Web-based Futures Wheel</h1>
+    <p>COVID-19 pandemic flourished the inner futurist of many, bombarding our brains with predictions of the so-called post-COVID era, from the seasoned futurists to the laymen. We were confused but we knew that this was not the way to deal with uncertain situations like this. Our response was to sort and classify the possible impacts of the pandemic on the society and human life and link them together along causal and temporal lines in a futures wheel to make sense of the bigger picture.</p>
+    <p>we decided to develop a web-based and interactive wheel, suiting not only this current inquiry but our future projects too.we modified the concept of a futures wheel for our COVID-19 inquiry. In our model, we preferred the temporal sequence of the impacts/events to the linear causality of them, meaning that the further we move from the center, the later the events may occur. they may or may not be a direct effect of any previous impact/impact. The wheel can show if any impact/trend is decreasing, increasing, emerging, or being abolished altogether. It can also show how intense and severe the impact would be. An important feature we had in mind was how to show the lasting effect of these impacts. Some may vanish as soon as the pandemic ends, some can have longer-lasting effects and even cause a paradigm shift.</p>
+    <h1>Future City Innovation Lab</h1>
+    <p>Future City was co-founded by Hamidreza Mousavi and Mahan Mehrvarz; when in 2016, they decided to establish an innovation laboratory. Hamidreza, whose expertise is the problem seeking and solving was looking for a transformation from a consulting management frm to a development management organization. Likewise, Mahan, with his research background on innovation and design, was looking for incorporating systematic innovation processes and problem-oriented design among design problems.Our innovation lab is developed around design thinking and system architecture. Collaborating with various innovative teams and offcial and unoffcial startups, we do a variety of innovative actions such as problem seeking, problem-solving, planning, facilitating, accelerating, etc.</p>
+
+    <h1>Link and Nodes</h1>
+
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Impact Node</h3>
+        <p>you can interact wit this module, adding new links and comments.</p>
+     </div>
+     <div class="shape-container">
+      <div class="circle" style="height:60px; width:60px;">Impact</div>
+      </div>
+    </div>
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Main Categories</h3>
+     </div>
+     <div class="shape-container">
+      <div class="circle" style="height:50px; width:50px; background-color:#4a4949;">Category</div>
+      </div>
+    </div>
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Central Incident</h3>
+        <p>Biginning of a new wheel of futures</p>
+     </div>
+     <div class="shape-container">
+      <div class="circle" style="height:80px; width:80px; background-color:#949191;">Main Incident</div>
+      </div>
+      </div>
+
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Primary Links</h3>
+        <p></p>
+     </div>
+     <div class="shape-container">
+      <div class="primary-link"></div>
+      </div>
+    </div>
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Secondary Links</h3>
+        <p></p>
+     </div>
+     <div class="shape-container">
+      <div class="secondary-link"></div>
+      </div>
+    </div>
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Tertiary Links</h3>
+        <p></p>
+     </div>
+     <div class="shape-container">
+      <div class="tertiary-link"></div>
+      </div>
+    </div>
+    <div class="links-nodes">
+      <div class="description">
+        <h3>Extra-categorical Links</h3>
+        <p></p>
+     </div>
+     <div class="shape-container">
+      <div class="extra-categorical-link"></div>
+      </div>
+    </div>
+    <h1>Color-coding System</h1>
+    <p style="color:#e80909;">Double click on circles.</p>
+    <div id="grid">
+      <div class="item"></div>
+            <div class="item">Disappearing</div>
+            <div class="item">Decreasing</div>
+            <div class="item">Uncertain</div>
+            <div class="item">Increasing</div>
+            <div class="item">Emerging</div>
+            <div class="item">Intense</div>
+            <div class="item"><div class="circle" style="height:40px; width:40px; background-color:#e80909;"></div></div>
+            <div class="item"><div class="circle" style="height:40px; width:40px; background-color:#e012a2;"></div></div>
+            <div class="item"><div class="circle" style="height:40px; width:40px; background-color:#949191;"></div></div>
+            <div class="item"><div class="circle" style="height:40px; width:40px; background-color:#7800ab;"></div></div>
+            <div class="item"><div class="circle" style="height:40px; width:40px; background-color:#0600ab;"></div></div>
+            <div class="item">Medium impact</div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e80909;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e012a2;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#949191;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#7800ab;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#0600ab;"></div></div>
+            <div class="item">Light impact</div>
+            <div class="item"><div class="circle" style="height:20px; width:20px; background-color:#e80909;"></div></div>
+            <div class="item"><div class="circle" style="height:20px; width:20px; background-color:#e012a2;"></div></div>
+            <div class="item"><div class="circle" style="height:20px; width:20px; background-color:#949191;"></div></div>
+            <div class="item"><div class="circle" style="height:20px; width:20px; background-color:#7800ab;"></div></div>
+            <div class="item"><div class="circle" style="height:20px; width:20px; background-color:#0600ab;"></div></div>
+            <div class="item">During the pandemic</div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e80909; opacity:0.2;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e012a2; opacity:0.2;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#949191; opacity:0.2;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#7800ab; opacity:0.2;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#0600ab; opacity:0.2;"></div></div>
+            <div class="item">Short-term Impact</div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e80909; opacity:0.4;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e012a2; opacity:0.4;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#949191; opacity:0.4;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#7800ab; opacity:0.4;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#0600ab; opacity:0.4;"></div></div>
+            <div class="item">Mid-term Impact</div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e80909; opacity:0.6;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e012a2; opacity:0.6;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#949191; opacity:0.6;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#7800ab; opacity:0.6;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#0600ab; opacity:0.6;"></div></div>
+            <div class="item">Long-term Impact</div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e80909; opacity:0.8;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e012a2; opacity:0.8;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#949191; opacity:0.8;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#7800ab; opacity:0.8;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#0600ab; opacity:0.8;"></div></div>
+            <div class="item">Potential Paradigm Shift</div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e80909;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#e012a2;"></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#949191; "></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#7800ab; "></div></div>
+            <div class="item"><div class="circle" style="height:30px; width:30px; background-color:#0600ab;"></div></div>
+    </div>
+
+  </div>
+</body>

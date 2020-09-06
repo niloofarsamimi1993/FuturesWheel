@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <title>Futures Wheel</title>
+</head>
+<script src="https://d3js.org/d3.v3.min.js?2.9.3"></script>
+
+
+<style>
+
+*{
+  box-sizing: border-box;
+}
+
+.link {
+  stroke: #aaa;
+}
+
+.node text {
+stroke:#333;
+cursos:pointer;
+}
+
+.node circle{
+
+}
+
+#div1{
+  overflow: hidden;
+}
+#wraper1{
+  display: flex;
+  justify-content: center;
+
+
+}
+#wraper2{
+  height: 200px;
+  display: flex;
+  justify-content: center;
+
+}
+#guide{
+  width:300px;
+  left: 10px;
+  bottom: 20px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+
+}
+#side{
+  width:400px;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  position: absolute;
+  display: flex;
+
+}
+#siderect{
+  width:400px;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  fill: #f2f2f2;
+
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  background-image: linear-gradient(rgba(179, 179, 179, .4) .1em, transparent .1em), linear-gradient(90deg, rgba(179, 179, 179, .4) .1em, transparent .1em);
+  background-size: 4em 4em;
+  overflow: hidden;
+
+}
+
+
+</style>
+<body>
+  <div id="wraper1">
+
+  <div id="div1">
+    <svg  id="side">
+      <rect  id="siderect" />
+    <!--img src="guide.svg" alt="guide" id="guide"></div-->
+</div>
+
+
+</body>
+<script>
+
+var width = 1600,
+    height = 900
+var fill = d3.scale.category20();
+    var link=""
+    var ifrm = document.createElement("iframe");
+    ifrm.style.visibility = "hidden";
+
+    var ifrm2 = document.createElement("iframe");
+    ifrm2.style.visibility = "visible";
+    ifrm2.setAttribute("src", "side.html");
+    ifrm2.style.width = "400px";
+    ifrm2.style.height = "100%";
+    ifrm2.style.border = "none";
+    ifrm2.style.position = "absolute";
+    ifrm2.style.top = "0px";
+    ifrm2.style.left = "0px";
+    ifrm2.style.display = "flex";
+    document.body.appendChild(ifrm2);
+    var bck = document.createElement("svg");
+    bck.style.visibility = "visible";
+
+
+
+
+
+    var mouseclick = function(d) {
+      ifrm.remove();
+      bck.remove();
+            }
+
+
+
+
+var svg = d3.select("#div1").append("svg")
+    .attr("width", width)
+    .attr("height",height)
+    .on("click", mouseclick)
+    .call(d3.behavior.zoom().on("zoom", function () {
+    svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+  }))
+  .on("dblclick.zoom", null)
+  .on("mousedown.zoom",function() { d3.event.preventDefault(); })
+  .append("g")
+
+
+
+
+
+
+
+      // Three function that change the tooltip when user hover / move / leave a cell
+      var mouseover = function(d) {
+        //tooltip
+        //  .style("opacity", 1)
+        d3.select(this)
+          .style("stroke", "none")
+          //.style("opacity", 1)
+
+      }
+
+
+      var mousedbclick = function(d) {
+      if(d.URL!==""){
+        bck.style.visibility = "visible";
+        bck.style.width = "400px";
+        bck.style.height = "100%";
+        bck.style.background = "#f2f2f2";
+        bck.style.borderRadius = "0px";
+        bck.style.position = "absolute";
+        bck.style.top = "0px";
+        bck.style.left = "0px";
+        bck.style.display = "flex";
+
+      document.body.appendChild(bck);
+      link=d.URL;
+      ifrm.style.visibility = "visible";
+      ifrm.setAttribute("src", link);
+      ifrm.style.width = "400px";
+      ifrm.style.height = "100%";
+      ifrm.style.border = "none";
+      ifrm.style.position = "absolute";
+      ifrm.style.top = "0px";
+      ifrm.style.left = "0px";
+      ifrm.style.display = "flex";
+
+      document.body.appendChild(ifrm);
+
+
+    }
+
+      }
+
+
+
+var force = d3.layout.force()
+    .gravity(0.1)
+    .distance(function(d){
+        var dis = 200;
+        if (d.type === "primary-links") dis = 10;
+        return dis;
+      })
+    .charge(-3000)
+    .size([width, height]);
+
+d3.json("graphdata3.json", function(json) {
+  force
+      .nodes(json.nodes)
+      .links(json.links)
+      .start();
+
+  var link = svg.selectAll(".link")
+      .data(json.links)
+    .enter().append("line")
+      .attr("class", "link")
+    .style("stroke-width", function(d) {
+       if(d.type=="primary-links")return 5;
+       else if(d.type=="secondary-links")return 3;
+       else if(d.type=="tertiary-links")return 1;
+       else if(d.type=="extra-links")return 3; })
+    .style("stroke-dasharray",function(d) {
+      if(d.type=="extra-links")return ("3, 3");});
+
+  var node = svg.selectAll(".node")
+      .data(json.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .call(force.drag);
+
+
+
+
+
+
+  node.append("circle")
+      .attr("r",function(d) { if(d.intensity=="a")return 120;
+      else if(d.intensity=="b")return 35;
+      else if(d.intensity=="light")return 40;
+      else if(d.intensity=="medium")return 52;
+      else if(d.intensity=="intense")return 70; })
+        .style("fill",function(d) {
+            if(d.nature=="a")return "#949191";
+            else if(d.nature=="b")return "#4a4949";
+            else if(d.nature=="emerging")return "#0600ab";
+            else if(d.nature=="increasing")return "#7800ab";
+            else if(d.nature=="uncertain")return "#949191";
+            else if(d.nature=="disappearing")return "#e80909";
+            else if(d.nature=="decreasing")return "#e012a2";
+          })
+          .style("opacity",function(d) {
+              if(d.depth=="a")return 1;
+              else if(d.depth=="b")return 1;
+              else if(d.depth=="during")return 0.2;
+              else if(d.depth=="short-term")return 0.4;
+              else if(d.depth=="mid-term")return 0.6;
+              else if(d.depth=="long-term")return 0.8;
+              else if(d.depth=="potential")return 1;});
+
+
+
+    var radius = 60,
+        x      = 150,
+        y      = 100,
+        side   = 2 * radius * Math.cos(Math.PI / 4),
+        dx     = radius - side / 2;
+
+    node.append('foreignObject')
+    .attr('x', function(d) { if(d.intensity=="a")return -150;
+    else if(d.intensity=="b")return -75;
+    else if(d.intensity=="light")return -43;
+    else if(d.intensity=="medium")return -50;
+    else if(d.intensity=="intense")return -76; })
+    .attr('y', function(d) { if(d.intensity=="a")return -42;
+    else if(d.intensity=="b")return -10;
+    else if(d.intensity=="light")return -16;
+    else if(d.intensity=="medium")return -20;
+    else if(d.intensity=="intense")return -25; })
+      .attr('width', function(d) { if(d.intensity=="a")return 300;
+      else if(d.intensity=="b")return 150;
+      else if(d.intensity=="light")return 85;
+      else if(d.intensity=="medium")return 100;
+      else if(d.intensity=="intense")return 150; })
+      .attr('height',function(d) { if(d.intensity=="a")return 300;
+      else if(d.intensity=="b")return 150;
+      else if(d.intensity=="light")return 70;
+      else if(d.intensity=="medium")return 100;
+      else if(d.intensity=="intense")return 130; })
+      .attr("font-size",function(d) {
+          if(d.depth=="a")return "50px";
+          else if(d.depth=="b")return "10px";
+          else if(d.intensity=="light")return "10px";
+          else if(d.intensity=="medium")return "14px";
+          else if(d.intensity=="intense")return "19px";})
+      .attr("font-family", "Tahoma")
+      .attr("font-weight", "bold")
+      .attr("color",function(d) {
+          if(d.depth=="a")return "white";
+          else if(d.depth=="b")return "white";
+          else if(d.depth=="during")return "#4a4949";
+          else if(d.depth=="short-term")return "#4a4949";
+          else if(d.depth=="mid-term")return "#4a4949";
+          else if(d.depth=="long-term")return "white";
+          else if(d.depth=="potential")return "white";})
+      .attr("stroke","none")
+      .append('xhtml:p')
+        .text(function(d) { return d.name })
+        .attr('style', 'text-align:center;padding:2px;margin:2px;');
+
+  /*node.append("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", function(d) {
+          if(d.depth=="a")return 15;
+          if(d.depth=="b")return 5;
+          if(d.intensity=="light")return ;
+          if(d.intensity=="medium")return ;
+          if(d.intensity=="intense")return 10;})
+      .text(function(d) { return d.name })
+      .style("font-family", "Tahoma")
+      .style("font-size",function(d) {
+          if(d.depth=="a")return "40px";
+          if(d.depth=="b")return "20px";
+          if(d.intensity=="light")return "10px";
+          if(d.intensity=="medium")return "20px";
+          if(d.intensity=="intense")return "30px";})
+      .style("fill",function(d) {
+          if(d.depth=="a")return "white";
+          if(d.depth=="b")return "white";
+          if(d.depth=="during")return "#4a4949";
+          if(d.depth=="short-term")return "#4a4949";
+          if(d.depth=="mid-term")return "#4a4949";
+          if(d.depth=="long-term")return "white";
+          if(d.depth=="potential")return "white";})
+      .style("stroke",function(d) {
+          if(d.depth=="a")return "white";
+          if(d.depth=="b")return "white";
+          if(d.depth=="during")return "#4a4949";
+          if(d.depth=="short-term")return "#4a4949";
+          if(d.depth=="mid-term")return "#4a4949";
+          if(d.depth=="long-term")return "white";
+          if(d.depth=="potential")return "white";});*/
+
+          node.append("circle")
+                .attr("r",function(d) { if(d.intensity=="a")return 120;
+                else if(d.intensity=="b")return 35;
+                else if(d.intensity=="light")return 40;
+                else if(d.intensity=="medium")return 52;
+                else if(d.intensity=="intense")return 70; })
+                .style("opacity",0)
+            .on("dblclick", mousedbclick)
+            .on({
+          "mouseover": function(d) {
+            d3.select(this).style("cursor", "pointer");
+          },
+          "mouseout": function(d) {
+            d3.select(this).style("cursor", "default");
+          }
+          });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; })
+        .style("stroke",function(d) {
+           if(d.type=="primary-links")return "#999999";
+           else if(d.type=="secondary-links")return "#a3a5d4";
+           else if(d.type=="tertiary-links")return "#e08bd9";
+           else if(d.type=="extra-links")return "#e08b8b"; });
+
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  });
+});
+
+</script>
